@@ -1,0 +1,1 @@
+# homelab-soc-wazuh-pfsense-glpi
