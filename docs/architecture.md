@@ -24,7 +24,7 @@ Il n'y a pas de DMZ séparée. Elle a été envisagée puis abandonnée pour le 
 | Kali | WAN | dynamique | Poste attaquant | Kali 2025.2 |
 | Windows 10 | LAN-UTILISATEURS | 192.168.30.10 | Poste victime (phishing) | Windows 10 |
 | Metasploitable2 | LAN-SERVEURS | 192.168.20.10 | Cible legacy (SSH bruteforce) | Metasploitable2 |
-| Wazuh Server | LAN-SERVEURS | 192.168.20.20 | SIEM / orchestration réponse active | Wazuh 4.14 sur Ubuntu Server 24.04.4 |
+| Wazuh Server | LAN-SERVEURS | 192.168.20.20 | SIEM / orchestration réponse active | Wazuh 4.14.7 sur Ubuntu Server 24.04.4 |
 | GLPI | LAN-SERVEURS | 192.168.20.30 | Ticketing / traçabilité | GLPI 11.0.8 sur Ubuntu Server 24.04.4 |
 | Windows_Admin | LAN-SERVEURS | 192.168.20.40 | Accès GUI aux interfaces pfSense / Wazuh / GLPI | Windows 10 |
 
