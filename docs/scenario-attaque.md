@@ -54,6 +54,8 @@ L'exécution du payload ouvre une session Meterpreter sur Kali, via la connexion
 - Wazuh, règle custom 100201 (Sysmon Event 3, port destination 4444)
 - Suricata, signature ET Open native "Possible Metasploit Payload Common Construct Bind_API" (SID 2025644)
 
+![Session Meterpreter ouverte](../screenshots/meterpreter-session.png)
+
 ## 4. Découverte de Metasploitable2 (mouvement latéral)
 
 Depuis la session Meterpreter, consultation de l'historique de connexions SSH régulières sur Windows pour simuler la découverte d'un hôte cible :
@@ -115,6 +117,8 @@ Hydra et le module Metasploit `ssh_login` ont été abandonnés : incompatibles 
 Le `timeout 15` et le `sleep 2` entre tentatives corrigent un bug de blocage intermittent : `ConnectTimeout` ne borne que l'établissement TCP, pas toute la négociation SSH à travers le tunnel `portfwd` (limite connue de `portfwd` sous trafic répété).
 
 Identifiants trouvés : `msfadmin` / `msfadmin` (identifiants par défaut de Metasploitable2, jamais changés).
+
+![Mot de passe trouvé par le script de brute force](../screenshots/bruteforce-success.png)
 
 Cette étape est détectée par Wazuh (règle custom 100502, voir [detection.md](detection.md)).
 

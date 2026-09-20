@@ -20,6 +20,8 @@ Les règles de filtrage entre zones sont détaillées dans [architecture.md](arc
 2. Activer la sonde sur l'interface LAN-UTILISATEURS : *Services → Suricata → Interface Settings*, cliquer sur l'icône crayon de l'interface **LAN_UTILISATEURS** pour l'éditer.
 3. Dans l'onglet **Categories** de cette interface, cocher `emerging-malware.rules` (ruleset ET Open) pour activer la signature SID 2025644 (voir [detection.md](detection.md)).
 
+![Activation de emerging-malware.rules](../screenshots/suricata-categories.png)
+
 ## 3. Wazuh Server (Ubuntu Server 24.04.4, 192.168.20.20)
 
 ### Installation (mode all-in-one, script officiel)

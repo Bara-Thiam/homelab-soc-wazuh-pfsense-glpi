@@ -81,6 +81,8 @@ Add-Content -Path $logFile -Value "$(Get-Date) - Tache de revert planifiee"
 
 Le script bloque tout le sous-réseau WAN utilisé par Kali (192.168.208.0/24) en entrée et en sortie, tue le processus `phishing.exe` s'il tourne encore, puis planifie une tâche Windows (`schtasks`) pour lever le blocage automatiquement après 5 minutes — reproduisant le comportement `timeout=300` qu'aurait eu l'Active Response native.
 
+![Règle pare-feu Windows appliquée après déclenchement](../screenshots/netsh-rule-applied.png)
+
 ## Pourquoi le mécanisme natif a été abandonné
 
 Une implémentation avec l'Active Response native de Wazuh (bloc `<active-response>`/`<command>`, `location: local`, script `block-wan.cmd`/`.ps1` exécuté par `wazuh-execd` sur l'agent Windows) a d'abord été mise en place et longuement déboguée :

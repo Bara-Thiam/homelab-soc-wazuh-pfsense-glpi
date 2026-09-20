@@ -72,6 +72,8 @@ requests.post(f"{hook_url}/Ticket", headers=headers_ticket, json=payload, timeou
 
 Chaque ticket créé contient : la règle Wazuh déclenchée (ID + niveau), l'agent concerné (nom + IP), le mapping MITRE ATT&CK, l'horodatage et le log brut de l'événement. L'urgence est fixée à 5 (maximale) pour toutes les alertes envoyées, sans distinction de niveau.
 
+![Ticket créé dans GLPI](../screenshots/glpi-ticket.png)
+
 ## Quatrième règle déclenchante : 92213 (native)
 
 En plus des 3 règles custom déjà documentées dans [detection.md](detection.md), l'intégration GLPI se déclenche aussi sur la règle Wazuh native **92213** : "Executable file dropped in folder commonly used by malware" (niveau 15, groupe `sysmon_eid11_detections`, MITRE T1105 - Ingress Tool Transfer). Cette règle fait partie du ruleset Sysmon standard de Wazuh et détecte tout dépôt de fichier exécutable ou script dans un dossier temporaire habituellement utilisé pour l'exécution de malware (ex. `AppData\Local\Temp`), sans lien avec les règles custom du projet.
