@@ -1,6 +1,6 @@
 # Installation / guide de reproduction
 
-Guide de mise en place du lab dans l'ordre suivi : réseau (pfSense + Suricata) → Wazuh Server → agent Windows 10 → GLPI. Voir `architecture.md` pour le détail des VM, IP et zones réseau avant de commencer.
+Guide de mise en place du lab dans l'ordre suivi : réseau (pfSense + Suricata) → Wazuh Server → agent Windows 10 → GLPI. Voir [architecture.md](architecture.md) pour le détail des VM, IP et zones réseau avant de commencer.
 
 ## 1. pfSense — interfaces et zones réseau
 
@@ -12,13 +12,13 @@ Trois interfaces réseau, une par zone :
 | em1 | LAN-SERVEURS | 192.168.20.1/24 |
 | em2 | LAN-UTILISATEURS | 192.168.30.1/24 |
 
-Les règles de filtrage entre zones sont détaillées dans `architecture.md` (section "Filtrage réseau").
+Les règles de filtrage entre zones sont détaillées dans [architecture.md](architecture.md) (section "Filtrage réseau").
 
 ## 2. Suricata (package pfSense)
 
 1. Installer le package **Suricata** via *System → Package Manager*.
 2. Activer la sonde sur l'interface LAN-UTILISATEURS : *Services → Suricata → Interface Settings*, cliquer sur l'icône crayon de l'interface **LAN_UTILISATEURS** pour l'éditer.
-3. Dans l'onglet **Categories** de cette interface, cocher `emerging-malware.rules` (ruleset ET Open) pour activer la signature SID 2025644 (voir `detection.md`).
+3. Dans l'onglet **Categories** de cette interface, cocher `emerging-malware.rules` (ruleset ET Open) pour activer la signature SID 2025644 (voir [detection.md](detection.md)).
 
 ## 3. Wazuh Server (Ubuntu Server 24.04.4, 192.168.20.20)
 
@@ -33,7 +33,7 @@ Version installée : Wazuh 4.14.7.
 
 ### Règles custom
 
-Les 3 règles custom (100501, 100201, 100502, décrites dans `detection.md`) vont dans :
+Les 3 règles custom (100501, 100201, 100502, décrites dans [detection.md](detection.md)) vont dans :
 
 ```
 /var/ossec/etc/rules/local_rules.xml
@@ -59,7 +59,7 @@ sudo /var/ossec/framework/python/bin/python3 -m pip install requests
 
 ### Scripts d'intégration
 
-Les scripts `custom-response` et `custom-glpi` (contenus détaillés dans `reponse-active.md` et `tracabilite-glpi.md`) vont dans :
+Les scripts `custom-response` et `custom-glpi` (contenus détaillés dans [reponse-active.md](reponse-active.md) et [tracabilite-glpi.md](tracabilite-glpi.md)) vont dans :
 
 ```
 /var/ossec/integrations/
@@ -72,7 +72,7 @@ sudo chmod 750 /var/ossec/integrations/custom-response /var/ossec/integrations/c
 sudo chown root:wazuh /var/ossec/integrations/custom-response /var/ossec/integrations/custom-glpi
 ```
 
-Les deux blocs `<integration>` correspondants (avec les identifiants réels remplacés par des placeholders) sont détaillés dans `reponse-active.md` et `tracabilite-glpi.md`.
+Les deux blocs `<integration>` correspondants (avec les identifiants réels remplacés par des placeholders) sont détaillés dans [reponse-active.md](reponse-active.md) et [tracabilite-glpi.md](tracabilite-glpi.md).
 
 ## 4. Agent Windows 10 (192.168.30.10)
 
@@ -98,7 +98,7 @@ msiexec.exe /i $msi `
 
 ### Sysmon
 
-Téléchargé depuis [Sysinternals](https://download.sysinternals.com/files/Sysmon.zip), extrait, puis installé avec une configuration minimale explicitement conçue pour tout inclure (aucune exclusion) sur les Event ID nécessaires à la détection (voir `detection.md`) :
+Téléchargé depuis [Sysinternals](https://download.sysinternals.com/files/Sysmon.zip), extrait, puis installé avec une configuration minimale explicitement conçue pour tout inclure (aucune exclusion) sur les Event ID nécessaires à la détection (voir [detection.md](detection.md)) :
 
 ```powershell
 $sysmonConfig = @"
@@ -127,7 +127,7 @@ Un `onmatch="exclude"` avec une liste d'exclusion vide revient à tout journalis
 
 ### OpenSSH Server
 
-Disponible en tant que fonctionnalité optionnelle Windows, activée directement lors de l'installation de la VM Windows 10, sans commande a posteriori.
+Disponible en tant que fonctionnalité optionnelle Windows, activée directement lors de l'installation de la VM Windows 10 (case cochée dans les options d'installation), sans commande a posteriori.
 
 ## 5. GLPI (Ubuntu Server 24.04.4, 192.168.20.30, via Docker)
 
@@ -180,4 +180,4 @@ cd /opt/glpi
 sudo docker compose up -d
 ```
 
-L'API REST GLPI, utilisée par `custom-glpi` (voir `tracabilite-glpi.md`), est exposée sur `http://192.168.20.30/api.php/v1`.
+L'API REST GLPI, utilisée par `custom-glpi` (voir [tracabilite-glpi.md](tracabilite-glpi.md)), est exposée sur `http://192.168.20.30/api.php/v1`.

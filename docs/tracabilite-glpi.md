@@ -1,6 +1,6 @@
 # Traçabilité GLPI
 
-Chaque alerte détectée (téléchargement du payload, reverse shell, brute force SSH, ou dépôt de fichier suspect) crée automatiquement un ticket GLPI, via le même mécanisme d'`<integration>` Wazuh utilisé pour la réponse active (voir `reponse-active.md`), mais ciblant ici l'API REST de GLPI plutôt qu'une connexion SSH.
+Chaque alerte détectée (téléchargement du payload, reverse shell, brute force SSH, ou dépôt de fichier suspect) crée automatiquement un ticket GLPI, via le même mécanisme d'`<integration>` Wazuh utilisé pour la réponse active (voir [reponse-active.md](reponse-active.md)), mais ciblant ici l'API REST de GLPI plutôt qu'une connexion SSH.
 
 ```
 Alerte Wazuh (100501, 100201, 100502 ou 92213) → integration → custom-glpi.py (Wazuh Server) → API REST GLPI → Ticket créé
@@ -74,6 +74,6 @@ Chaque ticket créé contient : la règle Wazuh déclenchée (ID + niveau), l'ag
 
 ## Quatrième règle déclenchante : 92213 (native)
 
-En plus des 3 règles custom déjà documentées dans `detection.md`, l'intégration GLPI se déclenche aussi sur la règle Wazuh native **92213** : "Executable file dropped in folder commonly used by malware" (niveau 15, groupe `sysmon_eid11_detections`, MITRE T1105 - Ingress Tool Transfer). Cette règle fait partie du ruleset Sysmon standard de Wazuh et détecte tout dépôt de fichier exécutable ou script dans un dossier temporaire habituellement utilisé pour l'exécution de malware (ex. `AppData\Local\Temp`), sans lien avec les règles custom du projet.
+En plus des 3 règles custom déjà documentées dans [detection.md](detection.md), l'intégration GLPI se déclenche aussi sur la règle Wazuh native **92213** : "Executable file dropped in folder commonly used by malware" (niveau 15, groupe `sysmon_eid11_detections`, MITRE T1105 - Ingress Tool Transfer). Cette règle fait partie du ruleset Sysmon standard de Wazuh et détecte tout dépôt de fichier exécutable ou script dans un dossier temporaire habituellement utilisé pour l'exécution de malware (ex. `AppData\Local\Temp`), sans lien avec les règles custom du projet.
 
-Un exemple capturé illustre bien la généricité de cette règle : elle s'est déclenchée non pas sur `phishing.exe` lui-même, mais sur `revert-block-wan.ps1`, le script de nettoyage créé automatiquement dans `Temp` par le mécanisme de réponse active du projet (voir `reponse-active.md`). Autrement dit, le propre mécanisme de remédiation du lab déclenche lui-même une détection native Wazuh, en plus de détecter l'attaque initiale — un exemple concret de dépôt de fichier suspect en Temp, indépendant de l'origine (légitime ou malveillante) du fichier.
+Un exemple capturé illustre bien la généricité de cette règle : elle s'est déclenchée non pas sur `phishing.exe` lui-même, mais sur `revert-block-wan.ps1`, le script de nettoyage créé automatiquement dans `Temp` par le mécanisme de réponse active du projet (voir [reponse-active.md](reponse-active.md)). Autrement dit, le propre mécanisme de remédiation du lab déclenche lui-même une détection native Wazuh, en plus de détecter l'attaque initiale — un exemple concret de dépôt de fichier suspect en Temp, indépendant de l'origine (légitime ou malveillante) du fichier.

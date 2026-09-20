@@ -2,7 +2,7 @@
 
 ## Mécanisme utilisé : Integration Wazuh + script Python (SSH)
 
-Contrairement à un déploiement Wazuh classique, la réponse active n'utilise pas le mécanisme natif Active Response de Wazuh (`<active-response>`/`<command>`, exécuté par `wazuh-execd`). Ce mécanisme natif a été testé de manière approfondie mais n'a jamais fonctionné de bout en bout sur cet agent Windows — voir la section "Pourquoi le mécanisme natif a été abandonné" plus bas et `troubleshooting.md` pour le détail complet du débogage.
+Contrairement à un déploiement Wazuh classique, la réponse active n'utilise pas le mécanisme natif Active Response de Wazuh (`<active-response>`/`<command>`, exécuté par `wazuh-execd`). Ce mécanisme natif a été testé de manière approfondie mais n'a jamais fonctionné de bout en bout sur cet agent Windows — voir la section "Pourquoi le mécanisme natif a été abandonné" plus bas et [troubleshooting.md](troubleshooting.md) pour le détail complet du débogage.
 
 Le mécanisme réellement actif repose sur le bloc `<integration>` de Wazuh (normalement prévu pour envoyer des alertes vers un système tiers, ici détourné pour déclencher une action) :
 
@@ -91,7 +91,7 @@ Une implémentation avec l'Active Response native de Wazuh (bloc `<active-respon
 
 Ce comportement correspond à des rapports similaires, non résolus, concernant l'Active Response native en `location: local` sur agent Windows dans certaines versions de Wazuh. Plutôt que de continuer à déboguer un mécanisme interne sans log exploitable, la décision a été prise de changer le déclencheur (comment la réponse est invoquée) tout en réutilisant les composants déjà validés individuellement (le script de blocage, fonctionnel à 100 % en exécution manuelle) : le pivot vers une invocation SSH/Paramiko depuis un script d'intégration, décrit plus haut, qui contourne entièrement `wazuh-execd` côté agent.
 
-Le détail complet de cette séquence de débogage (logs, commandes de diagnostic, hypothèses écartées une à une) est conservé dans `troubleshooting.md`.
+Le détail complet de cette séquence de débogage (logs, commandes de diagnostic, hypothèses écartées une à une) est conservé dans [troubleshooting.md](troubleshooting.md).
 
 ## Sécurité
 

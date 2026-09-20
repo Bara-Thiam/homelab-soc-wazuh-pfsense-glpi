@@ -1,6 +1,6 @@
 # Scénario d'attaque
 
-Scénario testé et validé de bout en bout : phishing → reverse shell → mouvement latéral → brute force SSH. Chaque étape est détectée par la chaîne de détection (voir `detection.md`) et déclenche, pour les deux premières, une réponse active automatique (voir `reponse-active.md`).
+Scénario testé et validé de bout en bout : phishing → reverse shell → mouvement latéral → brute force SSH. Chaque étape est détectée par la chaîne de détection (voir [detection.md](detection.md)) et déclenche, pour les deux premières, une réponse active automatique (voir [reponse-active.md](reponse-active.md)).
 
 ## Simplification volontaire du lab
 
@@ -71,7 +71,7 @@ shell
 powershell Test-NetConnection -ComputerName 192.168.20.10 -Port 22
 ```
 
-Pas de scan large : le pare-feu pfSense le bloquerait (LAN-UTILISATEURS → LAN-SERVEURS bloqué par défaut, seule l'exception SSH 192.168.30.10 → 192.168.20.10:22 est autorisée, voir `architecture.md`).
+Pas de scan large : le pare-feu pfSense le bloquerait (LAN-UTILISATEURS → LAN-SERVEURS bloqué par défaut, seule l'exception SSH 192.168.30.10 → 192.168.20.10:22 est autorisée, voir [architecture.md](architecture.md)).
 
 ## 6. Pivot vers Metasploitable2
 
@@ -116,7 +116,7 @@ Le `timeout 15` et le `sleep 2` entre tentatives corrigent un bug de blocage int
 
 Identifiants trouvés : `msfadmin` / `msfadmin` (identifiants par défaut de Metasploitable2, jamais changés).
 
-Cette étape est détectée par Wazuh (règle custom 100502, voir `detection.md`).
+Cette étape est détectée par Wazuh (règle custom 100502, voir [detection.md](detection.md)).
 
 ## 8. Connexion avec les identifiants trouvés
 

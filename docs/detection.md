@@ -1,6 +1,6 @@
 # Détection
 
-Quatre mécanismes de détection couvrent trois des huit étapes du scénario d'attaque (voir `scenario-attaque.md`) : trois règles Wazuh custom, et deux signatures Suricata convergentes sur le même flux réseau.
+Quatre mécanismes de détection couvrent trois des huit étapes du scénario d'attaque (voir [scenario-attaque.md](scenario-attaque.md)) : trois règles Wazuh custom, et deux signatures Suricata convergentes sur le même flux réseau.
 
 | Étape du scénario | Mécanisme | Règle / Signature |
 |---|---|---|
