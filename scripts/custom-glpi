@@ -1,0 +1,43 @@
+#!/usr/bin/env python3
+import sys
+import json
+import requests
+
+alert_file = sys.argv[1]
+api_key = sys.argv[2]      # format : "APP_TOKEN|USER_TOKEN"
+hook_url = sys.argv[3]     # http://192.168.20.30/api.php/v1
+
+app_token, user_token = api_key.split("|")
+
+with open(alert_file) as f:
+    lines = [l for l in f.read().splitlines() if l.strip()]
+    alert = json.loads(lines[0])
+
+rule = alert.get("rule", {})
+agent = alert.get("agent", {})
+mitre = rule.get("mitre", {})
+
+ticket_name = f"[WAZUH] {rule.get('description', 'Alerte inconnue')}"
+ticket_content = (
+    f"Regle Wazuh : {rule.get('id')} (niveau {rule.get('level')})\n"
+    f"Agent : {agent.get('name')} ({agent.get('ip')})\n"
+    f"MITRE ATT&CK : {mitre.get('id', [])} - {mitre.get('technique', [])}\n"
+    f"Horodatage : {alert.get('timestamp')}\n"
+    f"Log complet : {alert.get('full_log', 'N/A')}"
+)
+
+headers_init = {
+    "Content-Type": "application/json",
+    "Authorization": f"user_token {user_token}",
+    "App-Token": app_token,
+}
+r = requests.get(f"{hook_url}/initSession", headers=headers_init, timeout=10)
+session_token = r.json().get("session_token")
+
+headers_ticket = {
+    "Content-Type": "application/json",
+    "Session-Token": session_token,
+    "App-Token": app_token,
+}
+payload = {"input": {"name": ticket_name, "content": ticket_content, "urgency": 5}}
+requests.post(f"{hook_url}/Ticket", headers=headers_ticket, json=payload, timeout=10)

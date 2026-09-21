@@ -127,6 +127,8 @@ Set-Content -Path .\sysmon-minimal.xml -Value $sysmonConfig -Encoding UTF8
 
 Un `onmatch="exclude"` avec une liste d'exclusion vide revient à tout journaliser pour cet Event ID : aucune règle ne matche pour exclure quoi que ce soit, donc tous les événements de ce type sont conservés.
 
+Fichier complet : [`configs/sysmon-config.xml`](../configs/sysmon-config.xml)
+
 ### OpenSSH Server
 
 Disponible en tant que fonctionnalité optionnelle Windows, activée directement lors de l'installation de la VM Windows 10 (case cochée dans les options d'installation), sans commande a posteriori.

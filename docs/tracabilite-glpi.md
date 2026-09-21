@@ -20,6 +20,8 @@ Alerte Wazuh (100501, 100201, 100502 ou 92213) → integration → custom-glpi.p
 
 Le champ `api_key` porte deux jetons distincts de l'API REST GLPI, séparés par `|` : l'`App-Token` (identifie l'application cliente) et le `User-Token` (identifie l'utilisateur GLPI au nom duquel les tickets sont créés). Les vrais jetons ne sont pas inclus dans ce dépôt.
 
+Fichier complet (les deux blocs `<integration>`) : [`configs/ossec-integrations.xml`](../configs/ossec-integrations.xml)
+
 ## Script d'intégration (`custom-glpi`, Python, exécuté sur le Wazuh Server)
 
 Le script suit le flux d'authentification standard de l'API REST GLPI en deux temps : ouverture d'une session (`initSession`) avec les deux jetons, puis création du ticket avec le `Session-Token` obtenu.
@@ -69,6 +71,8 @@ headers_ticket = {
 payload = {"input": {"name": ticket_name, "content": ticket_content, "urgency": 5}}
 requests.post(f"{hook_url}/Ticket", headers=headers_ticket, json=payload, timeout=10)
 ```
+
+Fichier complet : [`scripts/custom-glpi`](../scripts/custom-glpi)
 
 Chaque ticket créé contient : la règle Wazuh déclenchée (ID + niveau), l'agent concerné (nom + IP), le mapping MITRE ATT&CK, l'horodatage et le log brut de l'événement. L'urgence est fixée à 5 (maximale) pour toutes les alertes envoyées, sans distinction de niveau.
 

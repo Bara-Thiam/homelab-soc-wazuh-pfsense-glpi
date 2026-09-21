@@ -24,6 +24,8 @@ Alerte Wazuh (100501 ou 100201) → integration → custom-response.py (Wazuh Se
 
 Ce bloc détourne deux champs prévus pour un usage différent : `hook_url` porte l'IP de la cible SSH (Windows 10) plutôt qu'une URL de webhook, et `api_key` porte les identifiants Windows au format `utilisateur|mot_de_passe` plutôt qu'une clé d'API. Les identifiants réels sont remplacés ici par un placeholder ; voir la note de sécurité en fin de fichier.
 
+Fichier complet (les deux blocs `<integration>`) : [`configs/ossec-integrations.xml`](../configs/ossec-integrations.xml)
+
 Ce bloc est volontairement commenté par défaut dans `ossec.conf`. Pour dérouler le scénario d'attaque complet sans déclenchement de blocage (utile pour observer une session Meterpreter stable, par exemple), il suffit de le laisser en commentaire. Pour tester la réponse active, on le décommente puis on redémarre le manager (`sudo systemctl restart wazuh-manager`) avant de relancer le scénario.
 
 ### Script d'intégration (`custom-response`, Python, exécuté sur le Wazuh Server)
@@ -58,6 +60,8 @@ client.close()
 
 Le script se connecte via le serveur OpenSSH natif de Windows 10 (activé pour ce besoin), avec les mêmes identifiants que ceux fournis dans le bloc `<integration>`.
 
+Fichier complet : [`scripts/custom-response`](../scripts/custom-response)
+
 ### Script de blocage (`block-wan-remote.ps1`, exécuté à distance sur Windows 10)
 
 ```powershell
@@ -78,6 +82,8 @@ $revertScript | Out-File -FilePath "$env:TEMP\revert-block-wan.ps1" -Encoding AS
 schtasks /Create /TN "RevertBlockWan" /TR "powershell.exe -NoProfile -ExecutionPolicy Bypass -File $env:TEMP\revert-block-wan.ps1" /SC ONCE /ST (Get-Date).AddMinutes(5).ToString("HH:mm") /F | Out-Null
 Add-Content -Path $logFile -Value "$(Get-Date) - Tache de revert planifiee"
 ```
+
+Fichier complet : [`scripts/block-wan-remote.ps1`](../scripts/block-wan-remote.ps1)
 
 Le script bloque tout le sous-réseau WAN utilisé par Kali (192.168.208.0/24) en entrée et en sortie, tue le processus `phishing.exe` s'il tourne encore, puis planifie une tâche Windows (`schtasks`) pour lever le blocage automatiquement après 5 minutes — reproduisant le comportement `timeout=300` qu'aurait eu l'Active Response native.
 

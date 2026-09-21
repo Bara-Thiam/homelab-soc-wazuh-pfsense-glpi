@@ -112,6 +112,8 @@ while read -r pass; do
 done < passwords.txt
 ```
 
+Fichier complet : [`scripts/bruteforce.sh`](../scripts/bruteforce.sh)
+
 Hydra et le module Metasploit `ssh_login` ont été abandonnés : incompatibles avec la version legacy d'OpenSSH (4.7p1) de Metasploitable2. Les options SSH ci-dessus (`PubkeyAcceptedAlgorithms`, `HostKeyAlgorithms`, `KexAlgorithms`) forcent la compatibilité avec les algorithmes obsolètes de cette version.
 
 Le `timeout 15` et le `sleep 2` entre tentatives corrigent un bug de blocage intermittent : `ConnectTimeout` ne borne que l'établissement TCP, pas toute la négociation SSH à travers le tunnel `portfwd` (limite connue de `portfwd` sous trafic répété).

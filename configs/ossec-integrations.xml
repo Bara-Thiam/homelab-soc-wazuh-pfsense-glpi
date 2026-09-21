@@ -1,0 +1,23 @@
+<!--
+  Extrait de /var/ossec/etc/ossec.conf (Wazuh Server, 192.168.20.20)
+  Identifiants remplaces par des placeholders. Voir docs/reponse-active.md
+  et docs/tracabilite-glpi.md pour le detail de chaque mecanisme.
+-->
+
+<!-- Traçabilité : création de tickets GLPI (voir docs/tracabilite-glpi.md) -->
+<integration>
+  <name>custom-glpi</name>
+  <hook_url>http://192.168.20.30/api.php/v1</hook_url>
+  <api_key><app_token>|<user_token></api_key>
+  <rule_id>100501,100201,100502,92213</rule_id>
+  <alert_format>json</alert_format>
+</integration>
+
+<!-- Réponse active : blocage réseau via SSH (voir docs/reponse-active.md) -->
+<integration>
+  <name>custom-response</name>
+  <hook_url>192.168.30.10</hook_url>
+  <api_key><utilisateur>|<mot_de_passe></api_key>
+  <rule_id>100501,100201</rule_id>
+  <alert_format>json</alert_format>
+</integration>

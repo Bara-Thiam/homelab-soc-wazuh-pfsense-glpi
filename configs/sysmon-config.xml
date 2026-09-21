@@ -1,0 +1,15 @@
+<Sysmon schemaversion="4.90">
+  <EventFiltering>
+    <!-- Event ID 1: ProcessCreate -->
+    <ProcessCreate onmatch="exclude">
+    </ProcessCreate>
+
+    <!-- Event ID 3: NetworkConnect -->
+    <NetworkConnect onmatch="exclude">
+    </NetworkConnect>
+
+    <!-- Event ID 11: FileCreate -->
+    <FileCreate onmatch="exclude">
+    </FileCreate>
+  </EventFiltering>
+</Sysmon>
