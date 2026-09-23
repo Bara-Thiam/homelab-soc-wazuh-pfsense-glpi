@@ -74,6 +74,7 @@ Guide complet d'installation (pfSense/Suricata, Wazuh Server, agent Windows, GLP
 
 **Sereigne Bara Thiam**
 L2 Génie Informatique, Réseaux Systèmes et Sécurité, ESITEC - Groupe Supdeco Dakar - 2025–2026
+
 Projet réalisé dans le cadre d'un stage académique (juillet–septembre).
 
 > *"Pour vraiment savoir comment attaquer, il faut comprendre comment fonctionne la défense."*
